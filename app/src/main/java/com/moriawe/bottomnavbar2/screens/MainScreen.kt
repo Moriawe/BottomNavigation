@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moriawe.bottomnavbar2.navigation.BottomNavItem
@@ -43,7 +44,7 @@ fun MainScreen(navController: NavController, innerPadding: PaddingValues) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = {
-            //navController.navigate(Screen.DetailScreen.route)
+            navController.navigate(BottomNavItem.Detail.route)
             //navController.navigate(BottomNavItem.Detail.withArgs(text))
         },
             modifier = Modifier.align(Alignment.End)

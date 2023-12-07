@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.moriawe.bottomnavbar2.navigation.BottomNavItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,26 +33,22 @@ fun BottomNavBar(navController: NavController) {
         contentColor = Color(0xFF000000)
     ) {
 
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        /*
-                var selectedItemIndex by rememberSaveable() {
+        //val navBackStackEntry by navController.currentBackStackEntryAsState()
+        //val currentRoute = navBackStackEntry?.destination?.route
+
+        var selectedItemIndex by rememberSaveable() {
             mutableStateOf(0)
         }
 
-         */
-
-        items.forEach { item ->
-        //items.forEachIndexed { index, item ->
+        items.forEachIndexed { index, item ->
             NavigationBarItem(
                 label = {
                     Text(text = item.title, fontSize = 9.sp)
                 },
                 alwaysShowLabel = false,
-                //selected = selectedItemIndex == index,
-                selected = currentRoute == item.route,
+                selected = selectedItemIndex == index,
                 onClick = {
-                    //selectedItemIndex = index
+                    selectedItemIndex = index
                     navController.navigate(item.route) {
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
@@ -77,8 +72,7 @@ fun BottomNavBar(navController: NavController) {
                         }
                     ) {
                         Icon(
-                            imageVector = item.selectedIcon,
-                            //imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unSelectedIcon,
+                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unSelectedIcon,
                             contentDescription = item.title
                         )
                     }
