@@ -1,10 +1,9 @@
-package com.moriawe.bottomnavbar2
+package com.moriawe.bottomnavbar2.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,39 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-
-@Composable
-fun Navigation() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = Screen.MainScreen.route
-        ) {
-        composable(route = Screen.MainScreen.route) {
-            MainScreen(navController = navController)
-        }
-        composable(
-            route = Screen.DetailScreen.route + "/{name}",
-            arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                    defaultValue = "Jennie"
-                    nullable = true
-                } )
-            ) { entry ->
-                DetailScreen(name = entry.arguments?.getString("name"))
-            }
-    }
-}
+import com.moriawe.bottomnavbar2.navigation.BottomNavItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(navController: NavController, innerPadding: PaddingValues) {
 
     var text by remember {
         mutableStateOf("")
@@ -63,31 +34,21 @@ fun MainScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 50.dp)
+            .padding(innerPadding)
     ) {
         TextField(value = text, onValueChange = {
             text = it
         },
             modifier = Modifier.fillMaxWidth()
-            )
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = {
             //navController.navigate(Screen.DetailScreen.route)
-            navController.navigate(Screen.DetailScreen.withArgs(text))
+            //navController.navigate(BottomNavItem.Detail.withArgs(text))
         },
             modifier = Modifier.align(Alignment.End)
-            ) {
+        ) {
             Text(text = "Click")
         }
-    }
-}
-
-@Composable
-fun DetailScreen(name: String?) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-        ) {
-        Text(text = "Hello $name")
     }
 }

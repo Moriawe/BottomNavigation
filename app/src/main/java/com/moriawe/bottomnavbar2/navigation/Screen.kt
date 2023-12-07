@@ -1,5 +1,6 @@
-package com.moriawe.bottomnavbar2
+package com.moriawe.bottomnavbar2.navigation
 
+/*
 sealed class Screen(val route: String) {
     object MainScreen: Screen("main_screen")
     object DetailScreen: Screen("detail_screen")
@@ -15,4 +16,6 @@ sealed class Screen(val route: String) {
 
 }
 
+
+ */
 
